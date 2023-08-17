@@ -35,7 +35,7 @@ class ViewController2: UIViewController {
         getImage()
     }
 
-    func getImage() {
+    private func getImage() {
         let repository = vc1.repositories[vc1.rowIndex]
 
         TtlLbl.text = repository["full_name"] as? String

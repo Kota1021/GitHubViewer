@@ -11,12 +11,12 @@ import UIKit
 class ViewController: UITableViewController, UISearchBarDelegate {
     @IBOutlet var SearchBar: UISearchBar!
 
-    var repositories: [[String: Any]] = []
+    public var repositories: [[String: Any]] = []
 
-    var task: URLSessionTask?
-    var query: String!
-    var url: String!
-    var rowIndex: Int!
+    private var task: URLSessionTask?
+    private var query: String!
+    private var url: String!
+    public var rowIndex: Int!
 
     override func viewDidLoad() {
         super.viewDidLoad()
