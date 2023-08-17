@@ -276,7 +276,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#https://github.com/nicklockwood/SwiftFormat#xcode-build-phase\ncd BuildTools\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\n#swift package update #Uncomment this line temporarily to update the version used to the latest matching your BuildTools/Package.swift file\nswift run -c release swiftformat --lint --swiftversion 5.8.1 \"$SRCROOT\"\n";
+			shellScript = "#https://github.com/nicklockwood/SwiftFormat#xcode-build-phase\ncd BuildTools\nSDKROOT=(xcrun --sdk macosx --show-sdk-path)\n#swift package update #Uncomment this line temporarily to update the version used to the latest matching your BuildTools/Package.swift file\nswift run -c release swiftformat --lint --swiftversion 5.8.1 --disable redundantReturn \"$SRCROOT\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
