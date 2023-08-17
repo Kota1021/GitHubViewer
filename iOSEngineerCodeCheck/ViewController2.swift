@@ -20,12 +20,12 @@ class ViewController2: UIViewController {
     @IBOutlet var FrksLbl: UILabel!
     @IBOutlet var IsssLbl: UILabel!
 
-    var vc1: ViewController!
+    var searchViewController: ViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let repo = vc1.repositories[vc1.rowIndex]
+        let repo = searchViewController.repositories[searchViewController.rowIndex]
 
         LangLbl.text = "Written in \(repo["language"] as? String ?? "")"
         StrsLbl.text = "\(repo["stargazers_count"] as? Int ?? 0) stars"
@@ -36,7 +36,7 @@ class ViewController2: UIViewController {
     }
 
     private func getImage() {
-        let repository = vc1.repositories[vc1.rowIndex]
+        let repository = searchViewController.repositories[searchViewController.rowIndex]
 
         TtlLbl.text = repository["full_name"] as? String
 
