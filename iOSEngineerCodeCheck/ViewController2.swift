@@ -25,7 +25,7 @@ class ViewController2: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let repo = vc1.repositories[vc1.idx]
+        let repo = vc1.repositories[vc1.rowIndex]
 
         LangLbl.text = "Written in \(repo["language"] as? String ?? "")"
         StrsLbl.text = "\(repo["stargazers_count"] as? Int ?? 0) stars"
@@ -36,7 +36,7 @@ class ViewController2: UIViewController {
     }
 
     func getImage() {
-        let repository = vc1.repositories[vc1.idx]
+        let repository = vc1.repositories[vc1.rowIndex]
 
         TtlLbl.text = repository["full_name"] as? String
 
