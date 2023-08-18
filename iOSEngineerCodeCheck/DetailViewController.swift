@@ -31,26 +31,31 @@ class DetailViewController: UIViewController {
         repository = searchViewController.repositories[selectedRowIndex]
 
         guard let repository else { return }
+        TitleLabel.text = repository.fullName
         Language.text = "Written in \(repository.language ?? "")" // api can return null for language
         StarCount.text = "\(repository.stargazersCount) stars"
         WatchCount.text = "\(repository.watchersCount) watchers"
         ForkCount.text = "\(repository.forksCount) forks"
         IssueCount.text = "\(repository.openIssuesCount) open issues"
-        getImage()
+        Task {
+            ImageView.image = await fetchImage() ?? UIImage(systemName: "person.crop.circle.badge.questionmark")
+        }
     }
 
-    private func getImage() {
-        guard let repository else { return }
-        TitleLabel.text = repository.fullName
+    private func fetchImage() async -> UIImage? {
+        guard let repository else {
+            assertionFailure("repository nil")
+            return nil
+        }
         guard let url = URL(string: repository.owner.avatarUrl) else {
             assertionFailure("invalid image URL")
-            return
+            return nil
         }
-        URLSession.shared.dataTask(with:  url) { data, _, _ in
-            let image = UIImage(data: data!)!
-            DispatchQueue.main.async {
-                self.ImageView.image = image
-            }
-        }.resume()
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            return UIImage(data: data)
+        } catch {
+            return nil
+        }
     }
 }
