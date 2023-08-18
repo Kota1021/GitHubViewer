@@ -15,7 +15,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
 
     private var task: URLSessionTask?
     private var query: String?
-    private var url: String!
+//    private var url: String?
     public var rowIndex: Int!
 
     override func viewDidLoad() {
@@ -38,11 +38,17 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         query = searchBar.text
-        guard let query, !query.isEmpty else { return }
+        guard let query, !query.isEmpty else {
+            assertionFailure("query nil or empty, query: \(String(describing: query))")
+            return
+        }
+        guard let url = URL(string: "https://api.github.com/search/repositories?q=\(query)") else {
+            assertionFailure("URL nil")
+            return
+        }
 
-        url = "https://api.github.com/search/repositories?q=\(query)"
         // prepare network request
-        task = URLSession.shared.dataTask(with: URL(string: url)!) { data, _, _ in
+        task = URLSession.shared.dataTask(with: url) { data, _, _ in
             guard let object = try! JSONSerialization.jsonObject(with: data!) as? [String: Any] else { return }
             guard let items = object["items"] as? [[String: Any]] else { return }
             self.repositories = items
