@@ -21,7 +21,7 @@ class DetailViewController: UIViewController {
     @IBOutlet var IssueCount: UILabel!
 
     var searchViewController: SearchViewController!
-    private var repository: [String: Any]?
+    private var repository: Repository?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,21 +31,19 @@ class DetailViewController: UIViewController {
         repository = searchViewController.repositories[selectedRowIndex]
 
         guard let repository else { return }
-        Language.text = "Written in \(repository["language"] as? String ?? "")"
-        StarCount.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
-        WatchCount.text = "\(repository["wachers_count"] as? Int ?? 0) watchers"
-        ForkCount.text = "\(repository["forks_count"] as? Int ?? 0) forks"
-        IssueCount.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
+        Language.text = "Written in \(repository.language ?? "")" // api can return null for language
+        StarCount.text = "\(repository.stargazersCount) stars"
+        WatchCount.text = "\(repository.watchersCount) watchers"
+        ForkCount.text = "\(repository.forksCount) forks"
+        IssueCount.text = "\(repository.openIssuesCount) open issues"
         getImage()
     }
 
     private func getImage() {
         guard let repository else { return }
 
-        TitleLabel.text = repository["full_name"] as? String
-
-        guard let owner = repository["owner"] as? [String: Any] else { return }
-        guard let imageURL = owner["avatar_url"] as? String else { return }
+        TitleLabel.text = repository.fullName
+        let imageURL = repository.owner.avatarUrl
         URLSession.shared.dataTask(with: URL(string: imageURL)!) { data, _, _ in
             let image = UIImage(data: data!)!
             DispatchQueue.main.async {
