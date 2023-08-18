@@ -45,22 +45,15 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
             return
         }
 
-        // prepare network request
-        task = URLSession.shared.dataTask(with: url) { data, _, _ in
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            do {
-                let searchResult = try decoder.decode(SearchResult.self, from: data!)
-                self.repositories = searchResult.items
-            } catch {
-                assertionFailure("\(error)")
-            }
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+
+        Task {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let searchResult = try decoder.decode(SearchResult.self, from: data)
+            self.repositories = searchResult.items
+            self.tableView.reloadData()
         }
-        // practice network request
-        task?.resume()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
