@@ -26,11 +26,12 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
     }
 
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // ↓こうすれば初期のテキストを消せる
+        // delete placeholder text
         searchBar.text = ""
         return true
     }
 
+    // on query changed
     func searchBar(_: UISearchBar, textDidChange _: String) {
         task?.cancel()
     }
@@ -40,6 +41,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
 
         if query.count != 0 {
             url = "https://api.github.com/search/repositories?q=\(query!)"
+            // prepare network request
             task = URLSession.shared.dataTask(with: URL(string: url)!) { data, _, _ in
                 if let object = try! JSONSerialization.jsonObject(with: data!) as? [String: Any] {
                     if let items = object["items"] as? [[String: Any]] {
@@ -50,7 +52,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
                     }
                 }
             }
-            // これ呼ばなきゃリストが更新されません
+            // practice network request
             task?.resume()
         }
     }
