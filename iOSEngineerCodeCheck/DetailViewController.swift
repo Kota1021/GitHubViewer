@@ -41,10 +41,12 @@ class DetailViewController: UIViewController {
 
     private func getImage() {
         guard let repository else { return }
-
         TitleLabel.text = repository.fullName
-        let imageURL = repository.owner.avatarUrl
-        URLSession.shared.dataTask(with: URL(string: imageURL)!) { data, _, _ in
+        guard let url = URL(string: repository.owner.avatarUrl) else {
+            assertionFailure("invalid image URL")
+            return
+        }
+        URLSession.shared.dataTask(with:  url) { data, _, _ in
             let image = UIImage(data: data!)!
             DispatchQueue.main.async {
                 self.ImageView.image = image
