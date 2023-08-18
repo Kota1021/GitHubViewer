@@ -14,7 +14,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
     public var repositories: [[String: Any]] = []
 
     private var task: URLSessionTask?
-    private var query: String!
+    private var query: String?
     private var url: String!
     public var rowIndex: Int!
 
@@ -37,22 +37,21 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        query = searchBar.text!
+        query = searchBar.text
+        guard let query, !query.isEmpty else { return }
 
-        if query.count != 0 {
-            url = "https://api.github.com/search/repositories?q=\(query!)"
-            // prepare network request
-            task = URLSession.shared.dataTask(with: URL(string: url)!) { data, _, _ in
-                guard let object = try! JSONSerialization.jsonObject(with: data!) as? [String: Any] else { return }
-                guard let items = object["items"] as? [[String: Any]] else { return }
-                self.repositories = items
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+        url = "https://api.github.com/search/repositories?q=\(query)"
+        // prepare network request
+        task = URLSession.shared.dataTask(with: URL(string: url)!) { data, _, _ in
+            guard let object = try! JSONSerialization.jsonObject(with: data!) as? [String: Any] else { return }
+            guard let items = object["items"] as? [[String: Any]] else { return }
+            self.repositories = items
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
-            // practice network request
-            task?.resume()
         }
+        // practice network request
+        task?.resume()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {
