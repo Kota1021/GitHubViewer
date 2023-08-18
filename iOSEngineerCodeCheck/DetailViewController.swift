@@ -21,12 +21,16 @@ class DetailViewController: UIViewController {
     @IBOutlet var IssueCount: UILabel!
 
     var searchViewController: SearchViewController!
+    private var repository: [String: Any]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let selectedRowIndex = searchViewController.selectedRowIndex else {
+            preconditionFailure("selectedRowIndex nil")
+        }
+        repository = searchViewController.repositories[selectedRowIndex]
 
-        let repository = searchViewController.repositories[searchViewController.rowIndex]
-
+        guard let repository else { return }
         Language.text = "Written in \(repository["language"] as? String ?? "")"
         StarCount.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
         WatchCount.text = "\(repository["wachers_count"] as? Int ?? 0) watchers"
@@ -36,7 +40,7 @@ class DetailViewController: UIViewController {
     }
 
     private func getImage() {
-        let repository = searchViewController.repositories[searchViewController.rowIndex]
+        guard let repository else { return }
 
         TitleLabel.text = repository["full_name"] as? String
 

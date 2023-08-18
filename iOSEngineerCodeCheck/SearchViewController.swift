@@ -15,8 +15,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
 
     private var task: URLSessionTask?
     private var query: String?
-//    private var url: String?
-    public var rowIndex: Int!
+    public var selectedRowIndex: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +81,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
 
     override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 画面遷移時に呼ばれる
-        rowIndex = indexPath.row
+        selectedRowIndex = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
     }
 }
