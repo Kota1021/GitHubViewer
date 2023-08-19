@@ -37,24 +37,7 @@ class DetailViewController: UIViewController {
         ForkCount.text = "\(repository.forksCount) forks"
         IssueCount.text = "\(repository.openIssuesCount) open issues"
         Task {
-            ImageView.image = await fetchImage() ?? UIImage(systemName: "person.crop.circle.badge.questionmark")
-        }
-    }
-
-    private func fetchImage() async -> UIImage? {
-        guard let repository else {
-            assertionFailure("repository nil")
-            return nil
-        }
-        guard let url = URL(string: repository.owner.avatarUrl) else {
-            assertionFailure("invalid image URL")
-            return nil
-        }
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            return UIImage(data: data)
-        } catch {
-            return nil
+            ImageView.image = await GitHubAPI().fetchOwnerAvater(of: repository) ?? UIImage(systemName: "person.crop.circle.badge.questionmark")
         }
     }
 }
