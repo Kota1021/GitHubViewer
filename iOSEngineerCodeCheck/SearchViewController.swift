@@ -40,20 +40,14 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
             assertionFailure("query nil or empty, query: \(String(describing: query))")
             return
         }
-        guard let url = URL(string: "https://api.github.com/search/repositories?q=\(query)") else {
-            assertionFailure("URL nil")
-            return
-        }
-
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-
         Task {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let searchResult = try decoder.decode(SearchResult.self, from: data)
-            self.repositories = searchResult.items
-            self.tableView.reloadData()
+            do {
+                self.repositories = try await GitHubAPI().searchForRepositories(with: query)
+            } catch {
+                assertionFailure("\(error)")
+            }
         }
+        tableView.reloadData()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender _: Any?) {

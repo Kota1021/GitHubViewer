@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6748B6192A90A1B100B76B17 /* GitHubAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6748B6182A90A1B100B76B17 /* GitHubAPI.swift */; };
 		67AB9F882A8F372B00DDF8E7 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AB9F872A8F372B00DDF8E7 /* Repository.swift */; };
 		67AB9F8B2A8F449800DDF8E7 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AB9F8A2A8F449800DDF8E7 /* SearchResult.swift */; };
 		67AB9F8D2A8F449F00DDF8E7 /* Owner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AB9F8C2A8F449F00DDF8E7 /* Owner.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6748B6182A90A1B100B76B17 /* GitHubAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubAPI.swift; sourceTree = "<group>"; };
 		67AB9F872A8F372B00DDF8E7 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		67AB9F8A2A8F449800DDF8E7 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		67AB9F8C2A8F449F00DDF8E7 /* Owner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Owner.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				BFD945E0244DC5E80012785A /* SceneDelegate.swift */,
 				BFD945E2244DC5E80012785A /* SearchViewController.swift */,
 				BF0A658C244F2A3B00280FA6 /* DetailViewController.swift */,
+				6748B6182A90A1B100B76B17 /* GitHubAPI.swift */,
 				67AB9F892A8F448400DDF8E7 /* JSONObjects */,
 				BFD945E4244DC5E80012785A /* Main.storyboard */,
 				BFD945E7244DC5EB0012785A /* Assets.xcassets */,
@@ -309,6 +312,7 @@
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
 				67AB9F8B2A8F449800DDF8E7 /* SearchResult.swift in Sources */,
 				BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */,
+				6748B6192A90A1B100B76B17 /* GitHubAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
