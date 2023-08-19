@@ -12,7 +12,6 @@ class DetailViewController: UIViewController {
     @IBOutlet var ImageView: UIImageView!
 
     @IBOutlet var TitleLabel: UILabel!
-
     @IBOutlet var Language: UILabel!
 
     @IBOutlet var StarCount: UILabel!
